@@ -97,7 +97,7 @@ else
     echo "Alias 'webgoat-status' déjà présent."
 fi
 if ! grep -q "alias webgoat-ip=" "$BASHRC"; then
-    echo "alias webgoat-ip='if command -v ifconfig &>/dev/null; then ifconfig | awk \"/flags=/ {iface=\\\$1} /inet / && iface!=\\\"lo:\\\" {print \\\$2; exit}\"; else echo \"ifconfig non dispo\"; fi'" >> "$BASHRC"
+    echo "alias webgoat-ip='if command -v ifconfig &>/dev/null; then ifconfig | awk \"/flags=/ {iface=\\\$1} /inet / && iface==\\\"eth0:\\\" {print \\\$2; exit}\"; else echo \"ifconfig non dispo\"; fi'" >> "$BASHRC"
     echo "Alias 'webgoat-ip' ajouté."
     RC_MODIF=1
 else
@@ -129,7 +129,7 @@ else
 fi
 
 # 9. Affichage IP locale
-IP=$(ifconfig | awk '/flags=/ {iface=$1} /inet / && iface!="lo:" {print $2; exit}')
+IP=$(ifconfig | awk '/flags=/ {iface=$1} /inet / && iface=="eth0:" {print $2; exit}')
 
 # 10. Fin installation
 clear
